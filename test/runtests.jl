@@ -1,3 +1,4 @@
+using Polynomials
 using PolynomialEquations
 using Test
 
