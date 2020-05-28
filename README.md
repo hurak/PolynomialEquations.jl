@@ -84,12 +84,12 @@ a(s)x(-s)+b(-s)y(s) = c(s)
 a(s)x(-s)+a(-s)x(s) = 2b(s)
 ```
 ```math
-a(z)x(z^{-1})+b(z^{-1})y(z) = c(z)+d(z^{-1})
+a(z)x(1/z)+b(1/z)y(z) = c(z)+d(1/z)
 ```
 and
 
 ```math
-a(z)x(z^{-1})+a(z^{-1})x(z) = b(z)+b(z^{-1})
+a(z)x(1/z)+a(1/z)x(z) = b(z)+b(1/z)
 ```
 in which `a`, `b` and `c` are given polynomials and `x` and `y` are the polynomials to be found.
 
@@ -101,6 +101,6 @@ a(s)a(-s) = x(-s)x(s)
 and
 
 ```math
-a(z)a(z^{-1}) = x(z)x(z^{-1})
+a(z)a(1/z) = x(z)x(1/z)
 ```
 where `a` is some given univariate polynomial and `x` is a Hurwitz stable and Schur stable polynomial, respectively, That is, all its roots are inside the open left half plane and an open unit circle, respectively.
