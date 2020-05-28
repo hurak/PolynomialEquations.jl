@@ -83,8 +83,9 @@ end
     @test begin
         a = Polynomial([1,2,3],:s)
         b = Polynomial([4,5],:s)
-        c = Polynomial([1,1],:s);
-        a = a*c; b = b*c
+        c = Polynomial([1,1],:s)
+        a = a*c
+        b = b*c
         x, y = axby0(a,b)
         norm(a*x+b*y) < 1e-8
     end
@@ -94,7 +95,7 @@ end
     @test begin
         a = Polynomial([1,2,3],:s)
         b = Polynomial([4,5],:s)
-        c = Polynomial([6,7,8],:s);
+        c = Polynomial([6,7,8],:s)
         x,y = axbyc(a,b,c)
         norm(a*x+b*y-c) < 1e-8
     end
