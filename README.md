@@ -17,16 +17,20 @@ It must be emphasized that the package does not offer functionality for solving 
 The equations currently solved by the package are
 
 ```math
+\begin{equation}
 a(s)x(s)+b(s)y(s) = 0
+\end{equation}
 ```
 and
 
 ```math
+\begin{equation}
 a(s)x(s)+b(s)y(s) = c(s)
+\end{equation}
 ```
 where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found.
 
-Examples in Julia are
+### Examples in Julia
 
 ```julia
 julia> a = Polynomial([1,2,3],:s)
