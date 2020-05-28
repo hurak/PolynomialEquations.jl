@@ -41,3 +41,39 @@ end;
         isequal(p,r)
     end
 end;
+
+@testset "Building a lower triangular banded Toeplitz matrix" begin
+    @test begin
+        a = Polynomial([1.0,2.0,3.0,4.0],:s)
+        A = ltbtmatrix(a,3)
+        R = [1.0  0    0;
+             2.0  1.0  0;
+             3.0  2.0  1.0;
+             4.0  3.0  2.0;
+             0    4.0  3.0;
+             0    0    4.0]
+        isequal(A,R)
+    end
+end
+
+@testset "Building a Sylvester matrix" begin
+    @test begin
+        a = Polynomial([1,2,3],:s)
+        b = Polynomial([4,5],:s)
+        S = sylvestermatrix(a,b)
+        R = [1.0  4.0  0.0;
+             2.0  5.0  4.0;
+             3.0  0.0  5.0]
+        isequal(S,R)
+    end
+    @test begin
+        a = Polynomial([1,2,3],:s)
+        b = Polynomial([4,5],:s)
+        S = sylvestermatrix(a,b,degx=1)
+        R = [1.0  0.0  4.0  0.0  0.0;
+             2.0  1.0  5.0  4.0  0.0;
+             3.0  2.0  0.0  5.0  4.0;
+             0.0  3.0  0.0  0.0  5.0]
+        isequal(S,R)
+    end
+end
