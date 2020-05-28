@@ -11,5 +11,3 @@ using Test
         isequal(as,ac)
     end;
 end;
-
-end
