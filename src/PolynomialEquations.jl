@@ -1,5 +1,9 @@
 module PolynomialEquations
 
-# Write your package code here.
+using Polynomials
+
+include("transformations.jl")
+
+export scale
 
 end
