@@ -1,6 +1,7 @@
 using Polynomials
 using PolynomialEquations
 using Test
+using LinearAlgebra
 
 @testset "Scaling of a polynomial" begin
     @test begin
@@ -91,9 +92,9 @@ end
 
 @testset "Solving the ax+by=c equation" begin
     @test begin
-        a = Poly([1,2,3])
-        b = Poly([4,5])
-        c = Poly([6,7,8]);
+        a = Polynomial([1,2,3],:s)
+        b = Polynomial([4,5],:s)
+        c = Polynomial([6,7,8],:s);
         x,y = axbyc(a,b,c)
         norm(a*x+b*y-c) < 1e-8
     end
