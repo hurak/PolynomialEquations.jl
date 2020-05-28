@@ -19,3 +19,63 @@ function scale(a::Polynomial,ρ::Number)
     end
     p = Polynomial(c,a.var)     # converting the coefficient vector to a polynomial
 end
+
+"""
+    paraconj(a)
+
+Return the paraconjugate of a given univariate polynomial `a` given by `a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n` return the polynomial `\tilde a(s) = \bar a(-s)= \bar a_0 - \bar a_1 s + \bar a_2 s^2 + ... +/- \bar a_n s^n`.
+
+# Examples
+
+```julia
+julia> a = Polynomial(1:5,:s)
+Polynomial(1 + 2*s + 3*s^2 + 4*s^3 + 5*s^4)
+
+julia> p = paraconj(a)
+Polynomial(1 - 2*s + 3*s^2 - 4*s^3 + 5*s^4)
+
+julia> a = Polynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:s)
+Polynomial((1 + 1im) + (2 + 2im)*s + (3 + 3im)*s^2 + (4 + 4im)*s^3 + (5 + 5im)*s^4)
+
+julia> p = paraconj(a)
+Polynomial((1 - 1im) - (2 - 2im)*s + (3 - 3im)*s^2 - (4 - 4im)*s^3 + (5 - 5im)*s^4)
+```
+"""
+function paraconj(a::Polynomial)
+    if isequal(variable(a),variable(:s))
+        c = conj(a)
+        pc = deepcopy(coeffs(c))
+        pc[2:2:end] = -pc[2:2:end]
+    elseif (isequal(variable(a),variable(:z))) && (isequal(variable(a),variable(:d)))
+        # p(z^-1)
+    end
+    return Polynomial(pc,a.var)
+end
+
+"""
+    reciprocal(a)
+
+Return the reciprocal polynomial for a given polynomial `a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n`, that is, return the polynomial `r(s) = \bar a_n + \bar a_{n-1} s + \bar a_{n-2} s^2 + ... + \bar a_0 s^n`.
+
+# Examples
+
+```julia
+julia> a = Polynomial(1:5,:s)
+Polynomial(1 + 2*s + 3*s^2 + 4*s^3 + 5*s^4)
+
+julia> p = reciprocal(a)
+Polynomial(5 + 4*s + 3*s^2 + 2*s^3 + s^4)
+
+julia> c = Polynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:s)
+Polynomial((1 + 1im) + (2 + 2im)*s + (3 + 3im)*s^2 + (4 + 4im)*s^3 + (5 + 5im)*s^4)
+
+julia> p = reciprocal(c)
+Polynomial((5 - 5im) + (4 - 4im)*s + (3 - 3im)*s^2 + (2 - 2im)*s^3 + (1 - 1im)*s^4)
+```
+"""
+function reciprocal(a::Polynomial)
+    c = conj(a)
+    cc = deepcopy(coeffs(c))
+    pc = cc[end:-1:1]
+    p = Polynomial(pc,a.var)
+end
