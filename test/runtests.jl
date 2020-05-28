@@ -9,8 +9,8 @@ using Test
         as = scale(a,ρ)
         r = Polynomial([1,20,300,4000,50000],:s)
         isequal(as,r)
-    end;
-end;
+    end
+end
 
 @testset "Paraconjugate of a polynomial" begin
     @test begin
@@ -25,7 +25,7 @@ end;
         r = Polynomial([1-1im, -(2-2im), 3-3im, -(4-4im), 5-5im],:s)
         isequal(p,r)
     end
-end;
+end
 
 @testset "Reciprocal polynomial" begin
     @test begin
@@ -40,7 +40,7 @@ end;
         r = Polynomial([5-5im, 4-4im, 3-3im, 2-2im, 1-1im],:s)
         isequal(p,r)
     end
-end;
+end
 
 @testset "Building a lower triangular banded Toeplitz matrix" begin
     @test begin
@@ -75,5 +75,26 @@ end
              3.0  2.0  0.0  5.0  4.0;
              0.0  3.0  0.0  0.0  5.0]
         isequal(S,R)
+    end
+end
+
+@testset "Solving the ax+by=0 equation" begin
+    @test begin
+        a = Polynomial([1,2,3],:s)
+        b = Polynomial([4,5],:s)
+        c = Polynomial([1,1],:s);
+        a = a*c; b = b*c
+        x, y = axby0(a,b)
+        norm(a*x+b*y) < 1e-8
+    end
+end
+
+@testset "Solving the ax+by=c equation" begin
+    @test begin
+        a = Poly([1,2,3])
+        b = Poly([4,5])
+        c = Poly([6,7,8]);
+        x,y = axbyc(a,b,c)
+        norm(a*x+b*y-c) < 1e-8
     end
 end
