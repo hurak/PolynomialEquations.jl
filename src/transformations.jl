@@ -44,14 +44,10 @@ Polynomial((1 - 1im) - (2 - 2im)*s + (3 - 3im)*s^2 - (4 - 4im)*s^3 + (5 - 5im)*s
 ```
 """
 function cconj(a::Polynomial)
-    if isequal(variable(a),variable(:s))
-        c = conj(a)
-        pc = deepcopy(coeffs(c))
-        pc[2:2:end] = -pc[2:2:end]
-    elseif (isequal(variable(a),variable(:z))) && (isequal(variable(a),variable(:d)))
-        # p(z^-1)
-    end
-    return Polynomial(pc,a.var)
+    c = conj(a)
+    cc = deepcopy(coeffs(c))
+    cc[2:2:end] = -cc[2:2:end]
+    return Polynomial(cc,a.var)
 end
 
 """
