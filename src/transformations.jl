@@ -25,6 +25,8 @@ end
 
 Return the conjugate of a given univariate polynomial `a` given by `a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n` with respect to the imaginary axis, that is, return the polynomial `\tilde a(s) = \bar a(-s)= \bar a_0 - \bar a_1 s + \bar a_2 s^2 + ... +/- \bar a_n s^n`.
 
+It is used in the analysis and synthesis of continuous-time filters and controllers. This is reflected in prepending the letter `c` to the `conj` function name.
+
 # Examples
 
 ```julia
@@ -78,4 +80,34 @@ function conjreciprocal(a::Polynomial)
     cc = deepcopy(coeffs(c))
     pc = cc[end:-1:1]
     p = Polynomial(pc,a.var)
+end
+
+"""
+    dconj(a)
+
+Return the conjugate polynomial for a given polynomial `a(z) = a_0 + a_1 z + a_2 z^2 + ... + a_n z^n` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial `d(s) = \bar a_n + \bar a_{n-1} s + \bar a_{n-2} s^2 + ... + \bar a_0 s^n`. The function is only defined for Laurent polynomials.
+
+It is used in the analysis and synthesis of discrete-time filters and controllers. This is reflected in prepending the letter `d` to the `conj` function name.
+
+# Examples
+
+```julia
+julia> a = LaurentPolynomial(1:5,:z)
+LaurentPolynomial(1 + 2*z + 3*z² + 4*z³ + 5*z⁴)
+
+julia> p = dconj(a)
+LaurentPolynomial(5*z⁻⁴ + 4*z⁻³ + 3*z⁻² + 2*z⁻¹ + 1)
+
+julia> c = LaurentPolynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:z)
+LaurentPolynomial((1 + 1im) + (2 + 2im)*z + (3 + 3im)*z² + (4 + 4im)*z³ + (5 + 5im)*z⁴)
+
+julia> p = dconj(c)
+LaurentPolynomial((5 - 5im)*z⁻⁴ + (4 - 4im)*z⁻³ + (3 - 3im)*z⁻² + (2 - 2im)*z⁻¹ + (1 - 1im))
+```
+"""
+function dconj(a::LaurentPolynomial)
+    ac = deepcopy(coeffs(a))
+    dc = conj.(ac[end:-1:1])             # flipping and conjugating the coeffs
+    fr = -a.n[]:-a.m[]                   # flipping and negating the range
+    d = LaurentPolynomial(dc,fr,a.var)
 end

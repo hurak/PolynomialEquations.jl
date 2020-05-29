@@ -10,6 +10,7 @@ include("linear.jl")
 export scale
 export conjreciprocal
 export cconj
+export dconj
 export ltbtmatrix
 export sylvestermatrix
 export axbyc

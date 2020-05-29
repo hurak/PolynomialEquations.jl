@@ -43,6 +43,21 @@ end
     end
 end
 
+@testset "Conjugate of a polynomial with respect to the unit circle" begin
+    @test begin
+        a = LaurentPolynomial(1:5,:z)
+        d = dconj(a)
+        r = LaurentPolynomial(5:-1:0,-4:0,:z)
+        isequal(p,r)
+    end
+    @test begin
+        a = = LaurentPolynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:z)
+        d = dconj(a)
+        r = LaurentPolynomial([5-5im, 4-4im, 3-3im, 2-2im, 1-1im],-4:0,:z)
+        isequal(p,r)
+    end
+end
+
 @testset "Building a lower triangular banded Toeplitz matrix" begin
     @test begin
         a = Polynomial([1.0,2.0,3.0,4.0],:s)
