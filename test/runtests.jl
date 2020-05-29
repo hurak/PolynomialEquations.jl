@@ -47,7 +47,7 @@ end
     @test begin
         a = LaurentPolynomial(1:5,:z)
         d = dconj(a)
-        r = LaurentPolynomial(5:-1:0,-4:0,:z)
+        r = LaurentPolynomial(5:-1:1,-4:0,:z)
         isequal(d,r)
     end
     @test begin
