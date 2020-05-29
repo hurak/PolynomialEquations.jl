@@ -13,31 +13,31 @@ using LinearAlgebra
     end
 end
 
-@testset "Paraconjugate of a polynomial" begin
+@testset "Conjugate of a polynomial with respect to the imaginary axis" begin
     @test begin
         a = Polynomial(1:5,:s)
-        p = paraconj(a)
+        p = cconj(a)
         r = Polynomial([1,-2,3,-4,5],:s)
         isequal(p,r)
     end
     @test begin
         a = Polynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:s)
-        p = paraconj(a)
+        p = cconj(a)
         r = Polynomial([1-1im, -(2-2im), 3-3im, -(4-4im), 5-5im],:s)
         isequal(p,r)
     end
 end
 
-@testset "Reciprocal polynomial" begin
+@testset "Conjugate reciprocal polynomial" begin
     @test begin
         a = Polynomial(1:5,:s)
-        p = reciprocal(a)
+        p = conjreciprocal(a)
         r = Polynomial([5,4,3,2,1],:s)
         isequal(p,r)
     end
     @test begin
         c = Polynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:s)
-        p = reciprocal(c)
+        p = conjreciprocal(c)
         r = Polynomial([5-5im, 4-4im, 3-3im, 2-2im, 1-1im],:s)
         isequal(p,r)
     end

@@ -8,8 +8,8 @@ include("matrices.jl")
 include("linear.jl")
 
 export scale
-export reciprocal
-export paraconj
+export conjreciprocal
+export cconj
 export ltbtmatrix
 export sylvestermatrix
 export axbyc

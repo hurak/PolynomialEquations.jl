@@ -21,9 +21,9 @@ function scale(a::Polynomial,ρ::Number)
 end
 
 """
-    paraconj(a)
+    cconj(a)
 
-Return the paraconjugate of a given univariate polynomial `a` given by `a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n` return the polynomial `\tilde a(s) = \bar a(-s)= \bar a_0 - \bar a_1 s + \bar a_2 s^2 + ... +/- \bar a_n s^n`.
+Return the conjugate of a given univariate polynomial `a` given by `a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n` with respect to the imaginary axis, that is, return the polynomial `\tilde a(s) = \bar a(-s)= \bar a_0 - \bar a_1 s + \bar a_2 s^2 + ... +/- \bar a_n s^n`.
 
 # Examples
 
@@ -31,17 +31,17 @@ Return the paraconjugate of a given univariate polynomial `a` given by `a(s) = a
 julia> a = Polynomial(1:5,:s)
 Polynomial(1 + 2*s + 3*s^2 + 4*s^3 + 5*s^4)
 
-julia> p = paraconj(a)
+julia> p = cconj(a)
 Polynomial(1 - 2*s + 3*s^2 - 4*s^3 + 5*s^4)
 
 julia> a = Polynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:s)
 Polynomial((1 + 1im) + (2 + 2im)*s + (3 + 3im)*s^2 + (4 + 4im)*s^3 + (5 + 5im)*s^4)
 
-julia> p = paraconj(a)
+julia> p = cconj(a)
 Polynomial((1 - 1im) - (2 - 2im)*s + (3 - 3im)*s^2 - (4 - 4im)*s^3 + (5 - 5im)*s^4)
 ```
 """
-function paraconj(a::Polynomial)
+function cconj(a::Polynomial)
     if isequal(variable(a),variable(:s))
         c = conj(a)
         pc = deepcopy(coeffs(c))
@@ -53,9 +53,9 @@ function paraconj(a::Polynomial)
 end
 
 """
-    reciprocal(a)
+    conjreciprocal(a)
 
-Return the reciprocal polynomial for a given polynomial `a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n`, that is, return the polynomial `r(s) = \bar a_n + \bar a_{n-1} s + \bar a_{n-2} s^2 + ... + \bar a_0 s^n`.
+Return the conjugate reciprocal polynomial for a given polynomial `a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n`, that is, return the polynomial `r(s) = \bar a_n + \bar a_{n-1} s + \bar a_{n-2} s^2 + ... + \bar a_0 s^n`.
 
 # Examples
 
@@ -63,17 +63,17 @@ Return the reciprocal polynomial for a given polynomial `a(s) = a_0 + a_1 s + a_
 julia> a = Polynomial(1:5,:s)
 Polynomial(1 + 2*s + 3*s^2 + 4*s^3 + 5*s^4)
 
-julia> p = reciprocal(a)
+julia> p = conjreciprocal(a)
 Polynomial(5 + 4*s + 3*s^2 + 2*s^3 + s^4)
 
 julia> c = Polynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:s)
 Polynomial((1 + 1im) + (2 + 2im)*s + (3 + 3im)*s^2 + (4 + 4im)*s^3 + (5 + 5im)*s^4)
 
-julia> p = reciprocal(c)
+julia> p = conjreciprocal(c)
 Polynomial((5 - 5im) + (4 - 4im)*s + (3 - 3im)*s^2 + (2 - 2im)*s^3 + (1 - 1im)*s^4)
 ```
 """
-function reciprocal(a::Polynomial)
+function conjreciprocal(a::Polynomial)
     c = conj(a)
     cc = deepcopy(coeffs(c))
     pc = cc[end:-1:1]
