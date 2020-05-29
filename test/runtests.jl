@@ -48,13 +48,13 @@ end
         a = LaurentPolynomial(1:5,:z)
         d = dconj(a)
         r = LaurentPolynomial(5:-1:0,-4:0,:z)
-        isequal(p,r)
+        isequal(d,r)
     end
     @test begin
         a = LaurentPolynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:z)
         d = dconj(a)
         r = LaurentPolynomial([5-5im, 4-4im, 3-3im, 2-2im, 1-1im],-4:0,:z)
-        isequal(p,r)
+        isequal(d,r)
     end
 end
 
