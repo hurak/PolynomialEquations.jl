@@ -51,7 +51,7 @@ end
         isequal(p,r)
     end
     @test begin
-        a = = LaurentPolynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:z)
+        a = LaurentPolynomial([1+1im, 2+2im, 3+3im, 4+4im, 5+5im],:z)
         d = dconj(a)
         r = LaurentPolynomial([5-5im, 4-4im, 3-3im, 2-2im, 1-1im],-4:0,:z)
         isequal(p,r)

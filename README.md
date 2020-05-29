@@ -104,3 +104,9 @@ and
 a(z)a(1/z) = x(z)x(1/z)
 ```
 where `a` is some given univariate polynomial and `x` is a Hurwitz stable and Schur stable polynomial, respectively, That is, all its roots are inside the open left half plane and an open unit circle, respectively.
+
+## Related packages
+- [Polynomials](https://github.com/JuliaMath/Polynomials.jl)
+- [PolynomialMatrices](https://github.com/JuliaPolynomialMatrices/PolynomialMatrices.jl)
+- [ControlSystems](https://github.com/JuliaControl/ControlSystems.jl)
+- [DSP](https://github.com/JuliaDSP/DSP.jl)
