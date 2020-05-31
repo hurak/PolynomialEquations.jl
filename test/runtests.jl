@@ -102,7 +102,7 @@ end
         a = a*c
         b = b*c
         x, y = axby0(a,b)
-        norm(a*x+b*y) < 1e-8
+        norm(a*x+b*y)<1e-8
     end
 end
 
@@ -112,6 +112,15 @@ end
         b = Polynomial([4,5],:s)
         c = Polynomial([6,7,8],:s)
         x,y = axbyc(a,b,c)
-        norm(a*x+b*y-c) < 1e-8
+        a*x+b*y≈c
+    end
+end
+
+@testset "Solving the equation ax+y=c while minimizing ||y||₁" begin
+    @test begin
+        a = Polynomial([-0.12, -0.29, 0.71, 2.79, 2.92, 1],:d)
+        c = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:d)
+        x, y, val = axycminl1(a,c)
+        a*x+y≈c
     end
 end
