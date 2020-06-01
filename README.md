@@ -105,8 +105,12 @@ a(z)a(1/z) = x(z)x(1/z)
 ```
 where `a` is some given univariate polynomial and `x` is a Hurwitz stable and Schur stable polynomial, respectively, That is, all its roots are inside the open left half plane and an open unit circle, respectively.
 
-## Related packages
+## Related Julia packages
 - [Polynomials](https://github.com/JuliaMath/Polynomials.jl) – provides the basic data types – `Polynomial` and `LaurentPolynomial`.
 - [PolynomialMatrices](https://github.com/JuliaPolynomialMatrices/PolynomialMatrices.jl) – a package defining a new data type – a polynomial matrix (or matrix polynomial). In principle, many if not all equations with polynomials can be reformulated as equations with polynomial matrices. For example, the equation ``ax+by=0`` can be formulated as ``[a b][x;y]=0``, that is a polynomial nullspace problem ``Ax=0``, or similarly ``ax+by=c`` can be rewritten as ``AX =c``, therefore developing dedicated scalar versions of solvers might be viewed as redundant. Still, in many projects scalar polynomials are used exclusively (SISO filter and controller design) and avoiding the complications with polynomial matrices is useful.   
 - [ControlSystems](https://github.com/JuliaControl/ControlSystems.jl) – a package for control system design. This package and the next  might be finally benefitting from the `PolynomialEquations` package. Some solver for linear diophantine equation with univariate polynomials is already implemented in `ControlSystems` package, namely the [dab](http://juliacontrol.github.io/ControlSystems.jl/latest/lib/synthesis/#ControlSystems.dab) function, but others are missing.
 - [DSP](https://github.com/JuliaDSP/DSP.jl) – a package for digital signal processing.
+
+## Related other software packages
+
+- [Polynomial Toolbox for Matlab](http://polyx.com/)  - one of the most complete packages for numerical computations with univariate polynomials. Commercial. 
