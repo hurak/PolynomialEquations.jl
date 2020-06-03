@@ -81,7 +81,7 @@ a(s)x(-s)+b(-s)y(s) = c(s)
 ```
 
 ```math
-a(s)x(-s)+a(-s)x(s) = 2b(s)
+a(s)x(-s)+a(-s)x(s) = b(s)+b(-s)
 ```
 ```math
 a(z)x(1/z)+b(1/z)y(z) = c(z)+d(1/z)
@@ -113,4 +113,4 @@ where `a` is some given univariate polynomial and `x` is a Hurwitz stable and Sc
 
 ## Related other software packages
 
-- [Polynomial Toolbox for Matlab](http://polyx.com/)  - one of the most complete packages for numerical computations with univariate polynomials. Commercial. 
+- [Polynomial Toolbox for Matlab](http://polyx.com/)  - one of the most complete packages for numerical computations with univariate polynomials. Commercial.

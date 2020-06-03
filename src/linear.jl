@@ -68,6 +68,44 @@ function axbyc(a::Polynomial,b::Polynomial,c::Polynomial)
 end
 
 """
+   x = axxabb(a,b)
+
+Solve the symmetric linear Diophantine equation ``ãx+ax̃=b+b̃`` with univariate polynomials.
+
+The conjugation is understood with respect to the imaginary axis, that is, ã(s)=a(-s) for polynomials with real coefficients. For complex polynomials, the coefficients are additionally complex conjugated.
+
+# Examples
+
+```jldoctest
+julia> a = Polynomial([-0.12, -0.29, 1],:s)
+Polynomial(-0.12 - 0.29*s + 1.0*s^2)
+
+julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s)
+Polynomial(1.86 - 0.34*s - 1.14*s^2 - 0.21*s^3 + 1.19*s^4 - 1.12*s^5)
+
+julia> x = axxabb(a,b)
+Polynomial(-15.50000000000003 + 50.0096551724139*s + 1.19*s^2)
+```
+"""
+function axxabb(a::Polynomial,b::Polynomial)
+    da = degree(a)
+    db = degree(b)
+    bb = b+cconj(b)
+    dbb = degree(bb)
+    dx = dbb - da
+    ã = cconj(a)
+    T̃ = ltbtmatrix(ã,dx+1)
+    i = fill(1,dx+1)
+    i[2:2:end] .= -1
+    T = ltbtmatrix(a,dx+1)
+    T =  T*diagm(i)
+    A = T̃+T
+    x = A\coeffs(bb)
+    x = Polynomial(x,a.var)
+    return x
+end
+
+"""
     axycminl1(a,c[,dymax=100,emax=1e-4])
 
 Solve the linear Diophantine equation ``ax+y=c`` for given univariate polynomials `a` and `c`, that is, find two univariate polynomials `x` and `y` satisfying the equation and, moreover, with the 1-norm of the vector of coefficients of the polynomial `y` minimized.

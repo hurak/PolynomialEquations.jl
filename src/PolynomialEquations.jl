@@ -17,8 +17,9 @@ export cconj
 export dconj
 export ltbtmatrix
 export sylvestermatrix
-export axbyc
 export axby0
+export axbyc
+export axxabb
 export axycminl1
 
 end

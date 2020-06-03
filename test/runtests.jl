@@ -116,6 +116,16 @@ end
     end
 end
 
+@testset "Solving the ax̃+ãx=b+b̃ equation" begin
+    @test begin
+        a = Polynomial([-0.12, -0.29, 1],:s)
+        b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s)
+        x = axxabb(a,b)
+        cconj(a)*x+a*cconj(x)≈b+cconj(b)
+    end
+end
+
+
 @testset "Solving the equation ax+y=c while minimizing ||y||₁" begin
     @test begin
         a = Polynomial([-0.12, -0.29, 0.71, 2.79, 2.92, 1],:d)
