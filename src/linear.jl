@@ -98,7 +98,7 @@ function axxabb(a::Polynomial,b::Polynomial)
     i = fill(1,dx+1)
     i[2:2:end] .= -1
     T = ltbtmatrix(a,dx+1)
-    T =  T*diagm(i)
+    T =  T*diagm(0=>i)
     A = T̃+T
     x = A\coeffs(bb)
     x = Polynomial(x,a.var)
