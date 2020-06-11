@@ -16,35 +16,11 @@ It must be emphasized that the package does not offer functionality for solving 
 
 The equations currently solved by the package are
 
+### Homogeneous linear diophantine equation
 ```math
 a(s)x(s)+b(s)y(s) = 0
 ```
-and
-
-```math
-a(s)x(s)+b(s)y(s) = c(s)
-```
-and
-
-```math
-a(s)x(-s)+a(-s)x(s) = b(s)+b(-s)
-```
-
-where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found. In the latter case, if the coefficients of the polynomials are complex, the equation should actually be written as
-
-```math
-a(s)x̃(s)+ã(s)x(s) = b(s)+b̃(s)
-```
-where tilde denotes conjugation with respect to the imaginary axis, that is, `-s` is substituted instead of `s` and the coefficients are complex-conjugated.
-
-As a generalization of the previous symmetric conjugate equation, there is also a solver for a nonsymmetric conjugation.
-
-```math
-a(s)x(-s)+b(-s)y(s) = c(s)
-```
-
-### Examples
-
+#### Example
 ```julia
 julia> a = Polynomial([1,2,3],:s);
 julia> b = Polynomial([4,5],:s);
@@ -58,8 +34,12 @@ julia> x, y = axby0(a,b)
 julia> a*x+b*y
 Polynomial(-8.881784197001252e-16 - 4.440892098500626e-16*s - 8.881784197001252e-16*s^2 - 8.881784197001252e-16*s^3)
 ```
-and
 
+### Linear diophantine equation
+```math
+a(s)x(s)+b(s)y(s) = c(s)
+```
+#### Example
 ```julia
 julia> a = Polynomial([1,2,3],:s);
 julia> b = Polynomial([4,5],:s);
@@ -71,12 +51,21 @@ julia> x,y = axbyc(a,b,c)
 julia> a*x+b*y≈c
 true
 ```
-and
+
+### Symmetrix conjugate equation (continuous-time case)  
 
 ```math
 a(s)x(-s)+a(-s)x(s) = b(s)+b(-s)
 ```
 
+where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found. In the latter case, if the coefficients of the polynomials are complex, the equation should actually be written as
+
+```math
+a(s)x̃(s)+ã(s)x(s) = b(s)+b̃(s)
+```
+where tilde denotes conjugation with respect to the imaginary axis, that is, `-s` is substituted instead of `s` and the coefficients are complex-conjugated.
+
+#### Example
 ```julia
 julia> a = Polynomial([-0.12, -0.29, 1],:s);
 julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
@@ -84,13 +73,17 @@ julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
 julia> x = axxabb(a,b)
 Polynomial(-15.50000000000003 + 50.0096551724139*s + 1.19*s^2)
 
-julia> cconj(a)*x+a*cconj(x)-(b+cconj(b))
-Polynomial(7.105427357601002e-15 + 2.220446049250313e-15*s^2)
-
 julia> cconj(a)*x+a*cconj(x)≈b+cconj(b)
-x = axxabb(a,b)
+true
 ```
 
+### Nonsymmetric conjugate equation (continuous-time case)
+As a generalization of the previous symmetric conjugate equation, there is also a solver for a nonsymmetric conjugation.
+
+```math
+a(s)x(-s)+b(-s)y(s) = c(s)+d(-s)
+```
+#### Example
 ```julia
 julia> a = Polynomial([-0.12, -0.29, 1],:s);
 julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
