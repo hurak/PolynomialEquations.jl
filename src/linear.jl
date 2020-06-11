@@ -3,16 +3,15 @@
 
 Solve the homogeneous linear Diophantine equation ``ax+by=0`` with scalar univariate polynomials.
 
-The problem corresponds to finding the minimum-order representation ``x/y`` of the fraction ``b/a``, that is, it solves ``b/a = x/y`` for a given fraction ``b/a`` such that `y` is of minimum possible degree.
+The problem corresponds to finding the minimum-order representation ``x/y`` of the fraction ``b/a`` (up to the minus sign), that is, it solves ``b/a = -x/y`` for a given fraction ``b/a`` such that `y` is of minimum possible degree.
 
 # Examples
 
 ```julia
 julia> a = Polynomial([1,2,3],:s); b = Polynomial([4,5],:s); c = Polynomial([1,1],:s);
-julia> a = a*c; b = b*c
+julia> a = a*c; b = b*c;
 julia> x, y = axby0(a,b)
-(Polynomial(-0.5393598899705949 - 0.6741998624632413*s), Polynomial(0.1348399724926485 + 0.2696799449852973*s +
-0.4045199174779448*s^2))
+(Polynomial(-0.5393598899705949 - 0.6741998624632413*s), Polynomial(0.1348399724926485 + 0.2696799449852973*s + 0.4045199174779448*s^2))
 ```
 """
 function axby0(a::Polynomial,b::Polynomial)
@@ -43,11 +42,12 @@ end
 
 Solve the linear Diophantine equation ``ax+by=c`` with univariate polynomials.
 
+The problem corresponds to finding a feedback controller given by the transfer function ``y/x`` for a system modelled by the transfer function ``b/a`` such the that closed-loop characteristic polynomial is `c`.
+
 # Examples
 
-```jldoctest
+```julia
 julia> a = Polynomial([1,2,3],:s);  b = Polynomial([5,6],:s); c = Polynomial([6,7,8],:s);
-
 julia> x, y = axbyc(a,b,c)
 (Polynomial(4.181818181818182), Polynomial(0.4545454545454546 - 0.9090909090909091*s))
 ```
@@ -76,13 +76,9 @@ The conjugation is understood with respect to the imaginary axis, that is, ã(s
 
 # Examples
 
-```jldoctest
-julia> a = Polynomial([-0.12, -0.29, 1],:s)
-Polynomial(-0.12 - 0.29*s + 1.0*s^2)
-
-julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s)
-Polynomial(1.86 - 0.34*s - 1.14*s^2 - 0.21*s^3 + 1.19*s^4 - 1.12*s^5)
-
+```julia
+julia> a = Polynomial([-0.12, -0.29, 1],:s);
+julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
 julia> x = axxabb(a,b)
 Polynomial(-15.50000000000003 + 50.0096551724139*s + 1.19*s^2)
 ```
@@ -98,11 +94,52 @@ function axxabb(a::Polynomial,b::Polynomial)
     i = fill(1,dx+1)
     i[2:2:end] .= -1
     T = ltbtmatrix(a,dx+1)
-    T =  T*diagm(0=>i)
+    T =  T*Diagonal(i)
     A = T̃+T
     x = A\coeffs(bb)
     x = Polynomial(x,a.var)
     return x
+end
+
+"""
+   x,y = axbycd(a,b,c)
+
+Solve the symmetric linear Diophantine equation ``ãx+b̃y=c+d̃`` with univariate polynomials.
+
+The conjugation is understood with respect to the imaginary axis, that is, ã(s)=a(-s) for polynomials with real coefficients. For complex polynomials, the coefficients are additionally complex conjugated.
+
+# Examples
+
+```julia
+julia> a = Polynomial([-0.12, -0.29, 1],:s);
+julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
+julia> x = axxabb(a,b)
+Polynomial(-15.50000000000003 + 50.0096551724139*s + 1.19*s^2)
+```
+"""
+function axbycd(a::Polynomial,b::Polynomial,c::Polynomial,d::Polynomial)
+    da = degree(a)
+    db = degree(b)
+    dc = degree(c)
+    dd = degree(d)
+    ccd = c+cconj(d)
+    dccd = degree(ccd)
+    dx = db-1
+    dy = da-1
+    Sa = ltbtmatrix(a,dx+1)
+    i = fill(1.0,dx+1)
+    i[2:2:end] .= -1.0
+    E = Diagonal(i)
+    Sa =  Sa*E
+    b̃ = cconj(b)
+    Sb = ltbtmatrix(b̃,dy+1)
+    S = [Sa Sb]
+    cxy = S\coeffs(ccd)
+    cx = cxy[1:dx+1]
+    cy = cxy[dx+2:end]
+    x = Polynomial(cx,a.var)
+    y = Polynomial(cy,a.var)
+    return x,y
 end
 
 """

@@ -20,7 +20,7 @@ julia> ltbtmatrix(a,3)
 function ltbtmatrix(a::Polynomial,c::Signed)
     da = degree(a)          # degree of the polynomial a
     r = da+c                # number of rows of the resulting matrix
-    T = [i >= j && i <= (j+da) ? a[i-j] : 0 for i=1:r, j=1:c]
+    T = [i >= j && i <= (j+da) ? a[i-j] : 0.0 for i=1:r, j=1:c]
     return T
 end
 
@@ -56,10 +56,10 @@ function sylvestermatrix(a::Polynomial,b::Polynomial;degx=degree(b)-1)
     for i = 1:n
         for j = 1:m
             if j <= dx+1           # if in the "left part" of the Sylvester matrix
-                S[i,j] = i >= j && i <= (j+da) ? a[i - j] : 0
+                S[i,j] = i >= j && i <= (j+da) ? a[i - j] : 0.0
             else
                 k = j-(dx+1)       # index of the column in the "right part" of the Sylvester matrix
-                S[i,j] = i >= k && i <= (k+db) ? b[i - k] : 0
+                S[i,j] = i >= k && i <= (k+db) ? b[i - k] : 0.0
             end
         end
     end

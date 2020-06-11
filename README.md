@@ -24,65 +24,90 @@ and
 ```math
 a(s)x(s)+b(s)y(s) = c(s)
 ```
-where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found.
-
-### Examples
-
-```julia
-julia> a = Polynomial([1,2,3],:s)
-Polynomial(1 + 2*s + 3*s^2)
-
-julia> b = Polynomial([4,5],:s)
-Polynomial(4 + 5*s)
-
-julia> c = Polynomial([1,1],:s)
-Polynomial(1 + s)
-
-julia> a = a*c
-Polynomial(1 + 3*s + 5*s^2 + 3*s^3)
-
-julia> b = b*c
-Polynomial(4 + 9*s + 5*s^2)
-
-julia> x, y = axby0(a,b)
-Degree of x: 1  Dimension of nullspace of S: 1
-Degree of x: 0  Dimension of nullspace of S: 0
-(Polynomial(-0.5393598899705949 - 0.6741998624632413*s), Polynomial(0.1348399724926485 + 0.2696799449852973*s + 0.4045199174779448*s^2))
-
-julia> a*x+b*y
-Polynomial(-8.881784197001252e-16 - 4.440892098500626e-16*s - 8.881784197001252e-16*s^2 - 8.881784197001252e-16*s^3)
-```
-
 and
 
-```julia
-julia> a = Polynomial([1,2,3],:s)
-Polynomial(1 + 2*s + 3*s^2)
-
-julia> b = Polynomial([4,5],:s)
-Polynomial(4 + 5*s)
-
-julia> c = Polynomial([6,7,8],:s)
-Polynomial(6 + 7*s + 8*s^2)
-
-julia> x,y = axbyc(a,b,c)
-(Polynomial(4.181818181818182), Polynomial(0.4545454545454547 - 0.909090909090909*s))
-
-julia> a*x+b*y-c
-Polynomial(8.881784197001252e-16*s)
+```math
+a(s)x(-s)+a(-s)x(s) = b(s)+b(-s)
 ```
 
-## To do
+where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found. In the latter case, if the coefficients of the polynomials are complex, the equation should actually be written as
 
-The problems for which solvers are not yet implemented in this package are the symmetric and conjugate linear equations
+```math
+a(s)x̃(s)+ã(s)x(s) = b(s)+b̃(s)
+```
+where tilde denotes conjugation with respect to the imaginary axis, that is, `-s` is substituted instead of `s` and the coefficients are complex-conjugated.
+
+As a generalization of the previous symmetric conjugate equation, there is also a solver for a nonsymmetric conjugation.
 
 ```math
 a(s)x(-s)+b(-s)y(s) = c(s)
 ```
 
+### Examples
+
+```julia
+julia> a = Polynomial([1,2,3],:s);
+julia> b = Polynomial([4,5],:s);
+julia> c = Polynomial([1,1],:s);
+julia> a = a*c;
+julia> b = b*c;
+
+julia> x, y = axby0(a,b)
+(Polynomial(-0.5393598899705949 - 0.6741998624632413*s), Polynomial(0.1348399724926485 + 0.2696799449852973*s + 0.4045199174779448*s^2))
+
+julia> a*x+b*y
+Polynomial(-8.881784197001252e-16 - 4.440892098500626e-16*s - 8.881784197001252e-16*s^2 - 8.881784197001252e-16*s^3)
+```
+and
+
+```julia
+julia> a = Polynomial([1,2,3],:s);
+julia> b = Polynomial([4,5],:s);
+julia> c = Polynomial([6,7,8],:s);
+
+julia> x,y = axbyc(a,b,c)
+(Polynomial(4.181818181818182), Polynomial(0.4545454545454547 - 0.909090909090909*s))
+
+julia> a*x+b*y≈c
+true
+```
+and
+
 ```math
 a(s)x(-s)+a(-s)x(s) = b(s)+b(-s)
 ```
+
+```julia
+julia> a = Polynomial([-0.12, -0.29, 1],:s);
+julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
+
+julia> x = axxabb(a,b)
+Polynomial(-15.50000000000003 + 50.0096551724139*s + 1.19*s^2)
+
+julia> cconj(a)*x+a*cconj(x)-(b+cconj(b))
+Polynomial(7.105427357601002e-15 + 2.220446049250313e-15*s^2)
+
+julia> cconj(a)*x+a*cconj(x)≈b+cconj(b)
+x = axxabb(a,b)
+```
+
+```julia
+julia> a = Polynomial([-0.12, -0.29, 1],:s);
+julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
+julia> c = Polynomial([1.2, 3.4, 5.6],:s);
+julia> d = Polynomial([3.4, 5.6, 6.7, 7.8, 8.9, 9.1, 1.2],:s);
+
+julia> x,y = axbycd(a,b,c,d)
+(Polynomial(13.57846778138169 + 9.81569937794185*s + 1.6765177065455532*s^2 + 12.031635021058513*s^3 + 1.5485480613952116*s^4), Polynomial(3.349148459013872 - 0.31120362624572473*s))
+
+julia> a*cconj(x)+cconj(b)*y≈c+cconj(d)
+true
+```
+
+## To do
+
+The symmetric and nonsymmetric conjugate equations for Laurent polynomials
+
 ```math
 a(z)x(1/z)+b(1/z)y(z) = c(z)+d(1/z)
 ```

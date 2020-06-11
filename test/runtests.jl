@@ -125,6 +125,16 @@ end
     end
 end
 
+@testset "Solving the ax̃+b̃y=c+d̃ equation" begin
+    @test begin
+        a = Polynomial([-0.12, -0.29, 1],:s)
+        b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s)
+        c = Polynomial([1.2, 3.4, 5.6],:s)
+        d = Polynomial([3.4, 5.6, 6.7, 7.8, 8.9, 9.1, 1.2],:s)
+        x,y = axbycd(a,b,c,d)
+        a*cconj(x)+cconj(b)*y≈c+cconj(d)
+    end
+end
 
 @testset "Solving the equation ax+y=c while minimizing ||y||₁" begin
     @test begin

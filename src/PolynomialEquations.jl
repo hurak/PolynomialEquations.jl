@@ -20,6 +20,7 @@ export sylvestermatrix
 export axby0
 export axbyc
 export axxabb
+export axbycd
 export axycminl1
 
 end
