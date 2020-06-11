@@ -20,6 +20,8 @@ The equations currently solved by the package are
 ```math
 a(s)x(s)+b(s)y(s) = 0
 ```
+where `a` and `b` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found.
+
 #### Example
 ```julia
 julia> a = Polynomial([1,2,3],:s);
@@ -39,6 +41,8 @@ Polynomial(-8.881784197001252e-16 - 4.440892098500626e-16*s - 8.881784197001252e
 ```math
 a(s)x(s)+b(s)y(s) = c(s)
 ```
+where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found.
+
 #### Example
 ```julia
 julia> a = Polynomial([1,2,3],:s);
@@ -58,12 +62,16 @@ true
 a(s)x(-s)+a(-s)x(s) = b(s)+b(-s)
 ```
 
-where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found. In the latter case, if the coefficients of the polynomials are complex, the equation should actually be written as
+where `a`, `b` and `c` are given univariate polynomials in the variable `s` and `x` and `y` are the polynomials to be found.
+
+If the coefficients of the polynomials are complex, then not only `-s` is substituted for `s` but also the coefficients are complex-conjugated.
+
+Formally, both real and complex cases are captured in the following notation
 
 ```math
 a(s)x̃(s)+ã(s)x(s) = b(s)+b̃(s)
 ```
-where tilde denotes conjugation with respect to the imaginary axis, that is, `-s` is substituted instead of `s` and the coefficients are complex-conjugated.
+where tilde denotes *conjugation of a polynomial with respect to the imaginary axis*, that is, the conjugate polynomial evaluates to a complex conjugate value of the original polynomial on the imaginary axis.  
 
 #### Example
 ```julia
