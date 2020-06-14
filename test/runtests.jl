@@ -79,6 +79,7 @@ end
              4  3  2;
              0  4  3;
              0  0  4]
+        isequal(A,R)     
     end
 end
 
