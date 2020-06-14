@@ -70,6 +70,16 @@ end
              0    0    4.0]
         isequal(A,R)
     end
+    @test begin
+        a = Polynomial([1,2,3,4],:s)
+        A = ltbtmatrix(a,3)
+        R = [1  0  0;
+             2  1  0;
+             3  2  1;
+             4  3  2;
+             0  4  3;
+             0  0  4]
+    end
 end
 
 @testset "Building a Sylvester matrix" begin
@@ -77,14 +87,14 @@ end
         a = Polynomial([1,2,3],:s)
         b = Polynomial([4,5],:s)
         S = sylvestermatrix(a,b)
-        R = [1.0  4.0  0.0;
-             2.0  5.0  4.0;
-             3.0  0.0  5.0]
+        R = [1  4  0;
+             2  5  4;
+             3  0  5]
         isequal(S,R)
     end
     @test begin
-        a = Polynomial([1,2,3],:s)
-        b = Polynomial([4,5],:s)
+        a = Polynomial([1.0,2.0,3.0],:s)
+        b = Polynomial([4.0,5.0],:s)
         S = sylvestermatrix(a,b,degx=1)
         R = [1.0  0.0  4.0  0.0  0.0;
              2.0  1.0  5.0  4.0  0.0;

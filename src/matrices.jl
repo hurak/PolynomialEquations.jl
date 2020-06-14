@@ -17,11 +17,18 @@ julia> ltbtmatrix(a,3)
  0    0    4.0
 ```
 """
-function ltbtmatrix(a::Polynomial,c::Signed)
+function ltbtmatrix(a::Polynomial{T},c::Signed) where {T}
     da = degree(a)          # degree of the polynomial a
     r = da+c                # number of rows of the resulting matrix
-    T = [i >= j && i <= (j+da) ? a[i-j] : 0.0 for i=1:r, j=1:c]
-    return T
+    M = zeros(T,r,c)
+    for i = 1:r
+        for j = 1:c
+            if i >= j && i <= (j+da)
+                M[i,j] = a[i-j]
+            end
+        end
+    end
+    return M
 end
 
 """
@@ -45,14 +52,14 @@ julia> S = sylvestermatrix(a,b)
  3.0  0.0  5.0
  ```
 """
-function sylvestermatrix(a::Polynomial,b::Polynomial;degx=degree(b)-1)
+function sylvestermatrix(a::Polynomial{T},b::Polynomial{T};degx=degree(b)-1) where {T}
     da = degree(a)
     db = degree(b)
     dx = degx
     dy = da+dx-db
     n = 1+da+dx                    # number of rows (default: da+db)
     m = 1+dx+1+dy                  # number of columns (default: da+db)
-    S = zeros(Float64,n,m)         # "hard-wired" to Float64 because we cannot exploit the knowledge of the data type anyway. TO DO: should be type-parameterized.
+    S = zeros(T,n,m)         # "hard-wired" to Float64 because we cannot exploit the knowledge of the data type anyway. TO DO: should be type-parameterized.
     for i = 1:n
         for j = 1:m
             if j <= dx+1           # if in the "left part" of the Sylvester matrix
