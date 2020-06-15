@@ -127,6 +127,12 @@ end
         x = axb(a,b)
         a*x≈b
     end
+    @test begin
+        a = Polynomial([1,2,3],:s)
+        b = Polynomial([1,2],:s);
+        x = axb(a,b)
+        a*x≈b
+    end
 end
 
 @testset "Solving the ax+by=0 equation" begin
@@ -146,6 +152,13 @@ end
         a = Polynomial([1,2,3],:s)
         b = Polynomial([4,5],:s)
         c = Polynomial([6,7,8],:s)
+        x,y = axbyc(a,b,c)
+        a*x+b*y≈c
+    end
+    @test begin
+        a = Polynomial([1,2,3],:s)*Polynomial([1,1],:s)
+        b = Polynomial([4,5],:s)*Polynomial([1,1],:s)
+        c = Polynomial([5,6,7,8,9],:s)
         x,y = axbyc(a,b,c)
         a*x+b*y≈c
     end
