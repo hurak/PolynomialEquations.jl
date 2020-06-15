@@ -58,7 +58,7 @@ end
     end
 end
 
-@testset "Building a lower triangular banded Toeplitz matrix" begin
+@testset "Building a lower triangular banded Toeplitz matrix for a polynomial" begin
     @test begin
         a = Polynomial([1.0,2.0,3.0,4.0],:s)
         A = ltbtmatrix(a,3)
@@ -79,7 +79,22 @@ end
              4  3  2;
              0  4  3;
              0  0  4]
-        isequal(A,R)     
+        isequal(A,R)
+    end
+end
+
+@testset "Building a lower triangular banded Toeplitz matrix for a Laurent polynomial" begin
+    @test begin
+        a = LaurentPolynomial([1,2,3,4,5],-2:2,:z)
+        A = ltbtmatrix(a,3)
+        R = [1  0  0;
+             2  1  0;
+             3  2  1;
+             4  3  2;
+             5  4  3;
+             0  5  4;
+             0  0  5]
+        isequal(A,R)
     end
 end
 
@@ -102,6 +117,15 @@ end
              3.0  2.0  0.0  5.0  4.0;
              0.0  3.0  0.0  0.0  5.0]
         isequal(S,R)
+    end
+end
+
+@testset "Solving the ax=b equations" begin
+    @test begin
+        a = Polynomial([1,2,3],:s);
+        b = a*Polynomial([1,2],:s);
+        x = axb(a,b)
+        a*x≈b
     end
 end
 

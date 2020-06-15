@@ -1,4 +1,35 @@
 """
+    x = axb(a,b)
+
+Solve the linear equation ``ax=b`` with scalar univariate polynomials.
+
+In the equation `a` and `b` are given polynomials in some variable,say, `s`, and `x` is a polynomial to be determined. The equation can be interpretted as dividing the the polynomial `b` by `a` to obtain a polynomial `x`. Obviously this will not always be possible, in which case the output will be a polynomial that minimizes the 2-norm of the resisual `e` in ``ax+e=b``.
+
+## Examples
+
+```julia
+julia> a = Polynomial([1,2,3],:s);
+julia> b = a*Polynomial([1,2],:s);
+
+julia> x = axb(a,b)
+Polynomial(0.9999999999999997 + 2.0000000000000004*s)
+
+julia> a*x≈b
+true
+```
+"""
+
+function axb(a::Polynomial,b::Polynomial)
+    da = degree(a)
+    db = degree(b)
+    dx = db-da
+    A = ltbtmatrix(a,dx+1)
+    bc = coeffs(b)
+    xc = A\bc
+    x = Polynomial(xc,a.var)
+end
+
+"""
     x,y = axby0(a,b)
 
 Solve the homogeneous linear Diophantine equation ``ax+by=0`` with scalar univariate polynomials.
