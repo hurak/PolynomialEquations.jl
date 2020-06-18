@@ -10,11 +10,16 @@ In the equation `a` and `b` are given polynomials in some variable,say, `s`, and
 ```julia
 julia> a = Polynomial([1,2,3],:s);
 julia> b = a*Polynomial([1,2],:s);
-
 julia> x = axb(a,b)
 Polynomial(0.9999999999999997 + 2.0000000000000004*s)
 
 julia> a*x≈b
+true
+
+julia> a = Polynomial([1,2],:s);
+julia> b = Polynomial([1,2,3],:s);
+julia> x = axb(a,b);
+julia> isnothing(x)
 true
 ```
 """

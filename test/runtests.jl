@@ -141,8 +141,8 @@ end
         a*x≈b
     end
     @test begin
-        a = Polynomial([1,2,3],:s)
-        b = Polynomial([1,2],:s);
+        a = Polynomial([1,2],:s)
+        b = Polynomial([1,2,3],:s);
         x = axb(a,b)                # it should detect there is no solution
         isnothing(x)
     end
