@@ -10,6 +10,7 @@ using Printf
 include("transformations.jl")
 include("matrices.jl")
 include("linear.jl")
+include("analysis.jl")
 
 export scale
 export conjreciprocal
@@ -17,6 +18,8 @@ export cconj
 export dconj
 export ltbtmatrix
 export sylvestermatrix
+export iscoprime
+export axb
 export axby0
 export axbyc
 export axxabb

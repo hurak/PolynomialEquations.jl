@@ -3,7 +3,7 @@
 
 Solve the linear equation ``ax=b`` with scalar univariate polynomials.
 
-In the equation `a` and `b` are given polynomials in some variable,say, `s`, and `x` is a polynomial to be determined. The equation can be interpretted as dividing the the polynomial `b` by `a` to obtain a polynomial `x`. Obviously this will not always be possible, in which case the output will be a polynomial that minimizes the 2-norm of the resisual `e` in ``ax+e=b``.
+In the equation `a` and `b` are given polynomials in some variable,say, `s`, and `x` is a polynomial to be determined. The equation can be interpretted as dividing the the polynomial `b` by `a` to obtain a polynomial `x`. Obviously this will not always be possible, in which case the function will return `nothing`.
 
 ## Examples
 
@@ -25,8 +25,16 @@ function axb(a::Polynomial,b::Polynomial)
     dx = db-da
     A = ltbtmatrix(a,dx+1)
     bc = coeffs(b)
-    xc = A\bc
-    x = Polynomial(xc,a.var)
+    F = qr(A)                           # instead of just solving the least squares problem,
+    R = F.R                             # we want to check if an exact solution exists
+    qb = F.Q'*bc                        # and do it efficiently (not by substituting into Ax=b)
+    if norm(qb[end-dx:end],Inf) < 1e-8  # should be perhaps something related to eps
+        xc = R\(qb[1:da])
+        x = Polynomial(xc,a.var)
+    else
+        x = nothing
+    end
+    return x
 end
 
 """
@@ -48,7 +56,6 @@ julia> x, y = axby0(a,b)
 function axby0(a::Polynomial,b::Polynomial)
     da = degree(a)
     db = degree(b)
-    rd = da-db            # relative degree of the transfer function b/a
     dx = db-1             # no need to start with deg(x) = deg(b) because such solution is guaranteed to exist:
     x = -b
     y = a

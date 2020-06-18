@@ -120,6 +120,19 @@ end
     end
 end
 
+@testset "Testing coprimeness of two polynomials" begin
+    @test begin
+        a = Polynomial([1,2,3],:s);
+        b = Polynomial([1,2],:s);
+        iscoprime(a,b)
+    end
+    @test begin
+        a = Polynomial([1,2,3],:s);
+        b = a*Polynomial([1,2],:s);
+        !iscoprime(a,b)
+    end
+end
+
 @testset "Solving the ax=b equations" begin
     @test begin
         a = Polynomial([1,2,3],:s);
@@ -131,7 +144,7 @@ end
         a = Polynomial([1,2,3],:s)
         b = Polynomial([1,2],:s);
         x = axb(a,b)                # it should detect there is no solution
-        a*x≈b
+        isnothing(x)
     end
 end
 
