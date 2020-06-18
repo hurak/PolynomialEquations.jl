@@ -206,6 +206,7 @@ julia> x, y, val = axycminl1(a,c);
 Verify that the solutions are truly satisfying the original equation
 ```julia
 julia> a*x+y≈c
+true
 ```
 Note that the degree of the resulting polynomial `y` might look high but it is only an artefact of the numerical solution.
 ```julia
