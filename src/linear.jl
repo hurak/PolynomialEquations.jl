@@ -81,7 +81,7 @@ function axby0(a::Polynomial,b::Polynomial)
 end
 
 """
-   x,y = axbyc(a,b,c)
+    x,y = axbyc(a,b,c)
 
 Solve the linear Diophantine equation ``ax+by=c`` with univariate polynomials.
 
@@ -111,7 +111,7 @@ function axbyc(a::Polynomial,b::Polynomial,c::Polynomial)
 end
 
 """
-   x = axxabb(a,b)
+    x = axxabb(a,b)
 
 Solve the symmetric linear Diophantine equation ``ãx+ax̃=b+b̃`` with univariate polynomials.
 
@@ -145,7 +145,7 @@ function axxabb(a::Polynomial,b::Polynomial)
 end
 
 """
-   x,y = axbycd(a,b,c)
+    x,y = axbycd(a,b,c)
 
 Solve the symmetric linear Diophantine equation ``ãx+b̃y=c+d̃`` with univariate polynomials.
 
