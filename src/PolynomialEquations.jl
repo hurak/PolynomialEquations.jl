@@ -19,6 +19,8 @@ export dconj
 export ltbtmatrix
 export sylvestermatrix
 export iscoprime
+export isschurstable
+export ishurwitzstable
 export axb
 export axby0
 export axbyc

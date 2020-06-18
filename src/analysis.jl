@@ -25,3 +25,49 @@ function iscoprime(a::Polynomial,b::Polynomial)
     S = sylvestermatrix(a,b,degx=dx)
     return rank(S)==(da+db)
 end
+
+"""
+    isschurstable(a)
+
+Check if the `a` is Schur stable, that is, it has all its roots inside the unit disk.
+
+## Examples
+
+```julia
+julia> a = fromroots([-1/2,0, 2/3,-1/3im, 1/3im])
+julia> isschurstable(a)
+true
+
+julia> a = fromroots([2,0, 2/3,-3im, 3im])
+julia> !isschurstable(a)
+false
+```
+"""
+
+function isschurstable(a::Polynomial)
+    r = roots(a)
+    all(abs.(r) .<= 1)
+end
+
+"""
+    ishurwitzstable(a)
+
+Check if the `a` is Schur stable, that is, it has all its roots inside the left complex half-plane.
+
+## Examples
+
+```julia
+julia> a = fromroots([-1, -2, -3+4im, -3-4im])
+julia> ishurwitzstable(a)
+true
+
+julia> a = fromroots([-1, -2, 3+4im, 3-4im])
+julia> !ishurwitzstable(a)
+false
+```
+"""
+
+function ishurwitzstable(a::Polynomial)
+    r = roots(a)
+    return all(real(r) .<= 0)
+end

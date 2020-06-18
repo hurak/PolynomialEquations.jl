@@ -133,6 +133,28 @@ end
     end
 end
 
+@testset "Testing Schur (discrete-time) stability of a polynomial" begin
+    @test begin
+        a = fromroots([-1/2,0, 2/3,-1/3im, 1/3im])
+        isschurstable(a)
+    end
+    @test begin
+        a = fromroots([2,0, 2/3,-3im, 3im])
+        !isschurstable(a)
+    end
+end
+
+@testset "Testing Hurwitz (continuous-time) stability of a polynomial" begin
+    @test begin
+        a = fromroots([-1, -2, -3+4im, -3-4im])
+        ishurwitzstable(a)
+    end
+    @test begin
+        a = fromroots([-1, -2, 3+4im, 3-4im])
+        !ishurwitzstable(a)
+    end
+end
+
 @testset "Solving the ax=b equations" begin
     @test begin
         a = Polynomial([1,2,3],:s);
