@@ -23,7 +23,7 @@ end
 """
     cconj(a)
 
-Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n`` with respect to the imaginary axis, that is, return the polynomial ``\tilde a(s) = \bar a(-s)= \bar a_0 - \bar a_1 s + \bar a_2 s^2 + ... +/- \bar a_n s^n``.
+Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n`` with respect to the imaginary axis, that is, return the polynomial ``\\tilde a(s) = \\bar a(-s)= \\bar a_0 - \\bar a_1 s + \\bar a_2 s^2 + ... +/- \\bar a_n s^n``.
 
 It is used in the analysis and synthesis of continuous-time filters and controllers. This is reflected in prepending the letter `c` to the `conj` function name.
 
@@ -53,7 +53,7 @@ end
 """
     conjreciprocal(a)
 
-Return the conjugate reciprocal polynomial for a given polynomial ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n``, that is, return the polynomial ``r(s) = \bar a_n + \bar a_{n-1} s + \bar a_{n-2} s^2 + ... + \bar a_0 s^n``.
+Return the conjugate reciprocal polynomial for a given polynomial ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n``, that is, return the polynomial ``r(s) = \\bar a_n + \\bar a_{n-1} s + \\bar a_{n-2} s^2 + ... + \\bar a_0 s^n``.
 
 # Examples
 
@@ -81,7 +81,7 @@ end
 """
     dconj(a)
 
-Return the conjugate polynomial for a given polynomial ``a(z) = a_0 + a_1 z + a_2 z^2 + ... + a_n z^n`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``d(s) = \bar a_n + \bar a_{n-1} s + \bar a_{n-2} s^2 + ... + \bar a_0 s^n``. The function is only defined for Laurent polynomials.
+Return the conjugate polynomial for a given polynomial ``a(z) = a_0 + a_1 z + a_2 z^2 + ... + a_n z^n`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``d(s) = \\bar a_n + \\bar a_{n-1} s + \\bar a_{n-2} s^2 + ... + \\bar a_0 s^n``. The function is only defined for Laurent polynomials.
 
 It is used in the analysis and synthesis of discrete-time filters and controllers. This is reflected in prepending the letter `d` to the `conj` function name.
 
