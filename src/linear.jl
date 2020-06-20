@@ -5,7 +5,7 @@ Solve the linear equation ``ax=b`` with scalar univariate polynomials.
 
 In the equation `a` and `b` are given polynomials in some variable,say, `s`, and `x` is a polynomial to be determined. The equation can be interpretted as dividing the the polynomial `b` by `a` to obtain a polynomial `x`. Obviously this will not always be possible, in which case the function will return `nothing`.
 
-## Examples
+# Examples
 
 ```julia
 julia> a = Polynomial([1,2,3],:s);
@@ -23,7 +23,6 @@ julia> isnothing(x)
 true
 ```
 """
-
 function axb(a::Polynomial,b::Polynomial)
     da = degree(a)
     db = degree(b)
@@ -111,7 +110,7 @@ function axbyc(a::Polynomial,b::Polynomial,c::Polynomial)
 end
 
 """
-    x = axxabb(a,b)
+    x = axaxbb(a,b)
 
 Solve the symmetric linear Diophantine equation ``ãx+ax̃=b+b̃`` with univariate polynomials.
 
@@ -122,11 +121,11 @@ The conjugation is understood with respect to the imaginary axis, that is, ã(s
 ```julia
 julia> a = Polynomial([-0.12, -0.29, 1],:s);
 julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
-julia> x = axxabb(a,b)
+julia> x = axaxbb(a,b)
 Polynomial(-15.50000000000003 + 50.0096551724139*s + 1.19*s^2)
 ```
 """
-function axxabb(a::Polynomial,b::Polynomial)
+function axaxbb(a::Polynomial,b::Polynomial)
     da = degree(a)
     db = degree(b)
     bb = b+cconj(b)

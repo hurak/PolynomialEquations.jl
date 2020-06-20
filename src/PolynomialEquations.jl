@@ -24,7 +24,7 @@ export ishurwitzstable
 export axb
 export axby0
 export axbyc
-export axxabb
+export axaxbb
 export axbycd
 export axycminl1
 

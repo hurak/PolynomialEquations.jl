@@ -3,7 +3,7 @@
 
 Check if the pair of polynomials `a` and `b` is coprime, that is, it has no common factors.
 
-## Examples
+# Examples
 
 ```julia
 julia> a = Polynomial([1,2,3],:s);
@@ -17,7 +17,6 @@ julia> iscoprime(a,b)
 false
 ```
 """
-
 function iscoprime(a::Polynomial,b::Polynomial)
     da = degree(a)
     db = degree(b)
@@ -31,19 +30,18 @@ end
 
 Check if the `a` is Schur stable, that is, it has all its roots inside the unit disk.
 
-## Examples
+# Examples
 
 ```julia
-julia> a = fromroots([-1/2,0, 2/3,-1/3im, 1/3im])
+julia> a = fromroots([-1/2,0, 2/3,-1/3im, 1/3im]);
 julia> isschurstable(a)
 true
 
-julia> a = fromroots([2,0, 2/3,-3im, 3im])
+julia> a = fromroots([2,0, 2/3,-3im, 3im]);
 julia> !isschurstable(a)
 false
 ```
 """
-
 function isschurstable(a::Polynomial)
     r = roots(a)
     all(abs.(r) .<= 1)
@@ -54,19 +52,18 @@ end
 
 Check if the `a` is Schur stable, that is, it has all its roots inside the left complex half-plane.
 
-## Examples
+# Examples
 
 ```julia
-julia> a = fromroots([-1, -2, -3+4im, -3-4im])
+julia> a = fromroots([-1, -2, -3+4im, -3-4im]);
 julia> ishurwitzstable(a)
 true
 
-julia> a = fromroots([-1, -2, 3+4im, 3-4im])
+julia> a = fromroots([-1, -2, 3+4im, 3-4im]);
 julia> !ishurwitzstable(a)
 false
 ```
 """
-
 function ishurwitzstable(a::Polynomial)
     r = roots(a)
     return all(real(r) .<= 0)

@@ -85,10 +85,10 @@ julia> b = Polynomial([4,5],:s)
 Polynomial(4 + 5*s)
 
 julia> S = sylvestermatrix(a,b)
-3×3 Array{Float64,2}:
- 1.0  4.0  0.0
- 2.0  5.0  4.0
- 3.0  0.0  5.0
+3×3 Array{Int64,2}:
+ 1  4  0
+ 2  5  4
+ 3  0  5
 ```
 """
 function sylvestermatrix(a::Polynomial{T},b::Polynomial{T};degx=degree(b)-1) where {T}

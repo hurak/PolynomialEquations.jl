@@ -78,7 +78,7 @@ where tilde denotes *conjugation of a polynomial with respect to the imaginary a
 julia> a = Polynomial([-0.12, -0.29, 1],:s);
 julia> b = Polynomial([1.86, -0.34, -1.14, -0.21, 1.19, -1.12],:s);
 
-julia> x = axxabb(a,b)
+julia> x = axaxbb(a,b)
 Polynomial(-15.50000000000003 + 50.0096551724139*s + 1.19*s^2)
 
 julia> cconj(a)*x+a*cconj(x)≈b+cconj(b)
