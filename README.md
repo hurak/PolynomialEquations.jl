@@ -47,10 +47,10 @@ where `a`, `b` and `c` are given univariate polynomials in the variable `s` and 
 ```julia
 julia> a = Polynomial([1,2,3],:s);
 julia> b = Polynomial([4,5],:s);
-julia> c = Polynomial([6,7,8],:s);
+julia> c = Polynomial([6,7,8,9],:s);
 
 julia> x,y = axbyc(a,b,c)
-(Polynomial(4.181818181818182), Polynomial(0.4545454545454547 - 0.909090909090909*s))
+(Polynomial(3.0909090909090913 + 3.0*s), Polynomial(0.7272727272727273 - 1.4545454545454548*s))
 
 julia> a*x+b*y≈c
 true
