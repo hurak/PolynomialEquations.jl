@@ -98,20 +98,33 @@ end
     end
 end
 
-@testset "Building a Sylvester matrix" begin
+@testset "Building a Sylvester resultant matrix" begin
     @test begin
         a = Polynomial([1,2,3],:s)
         b = Polynomial([4,5],:s)
-        S = sylvestermatrix(a,b)
+        S = sylvesterresultantmatrix(a,b)
         R = [1  4  0;
              2  5  4;
              3  0  5]
         isequal(S,R)
     end
+end
+
+@testset "Building a Sylvester matrix" begin
     @test begin
         a = Polynomial([1.0,2.0,3.0],:s)
         b = Polynomial([4.0,5.0],:s)
-        S = sylvestermatrix(a,b,degx=1)
+        S = sylvestermatrix(a,b,(1,3))
+        R = [1.0  4.0  0.0  0.0;
+             2.0  5.0  4.0  0.0;
+             3.0  0.0  5.0  4.0;
+             0.0  0.0  0.0  5.0]
+        isequal(S,R)
+    end
+    @test begin
+        a = Polynomial([1.0,2.0,3.0],:s)
+        b = Polynomial([4.0,5.0],:s)
+        S = sylvestermatrix(a,b,(2,3))
         R = [1.0  0.0  4.0  0.0  0.0;
              2.0  1.0  5.0  4.0  0.0;
              3.0  2.0  0.0  5.0  4.0;
@@ -186,16 +199,37 @@ end
     @test begin
         a = Polynomial([1,2,3],:s)
         b = Polynomial([4,5],:s)
-        c = Polynomial([6,7,8],:s)
+        c = Polynomial([6],:s)
         x,y = axbyc(a,b,c)
+        a*x+b*y≈c
+    end
+    @test begin
+        a = Polynomial([1,2,3],:s)
+        b = Polynomial([4,5],:s)
+        c = Polynomial([6,7,8,9],:s)
+        x,y = axbyc(a,b,c,deg=:miny)
+        a*x+b*y≈c
+    end
+    @test begin
+        a = Polynomial([1,2,3],:s)
+        b = Polynomial([4,5],:s)
+        c = Polynomial([6,7,8,9],:s)
+        x,y = axbyc(a,b,c,deg=:minx)
         a*x+b*y≈c
     end
     @test begin
         a = Polynomial([1,2,3],:s)*Polynomial([1,1],:s)
         b = Polynomial([4,5],:s)*Polynomial([1,1],:s)
-        c = Polynomial([5,6,7,8,9],:s)
-        x,y = axbyc(a,b,c)
+        c = Polynomial([6,7,8,9],:s)*Polynomial([1,1],:s)
+        x,y = axbyc(a,b,c,deg=:miny)
         a*x+b*y≈c
+    end
+    @test begin
+        a = Polynomial([1,2,3],:s)*Polynomial([1,1],:s)
+        b = Polynomial([4,5],:s)*Polynomial([1,1],:s)
+        c = Polynomial([6,7,8,9],:s)
+        x,y = axbyc(a,b,c,deg=:miny)
+        isnothing(x)               
     end
 end
 

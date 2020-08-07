@@ -17,6 +17,7 @@ export conjreciprocal
 export cconj
 export dconj
 export ltbtmatrix
+export sylvesterresultantmatrix
 export sylvestermatrix
 export iscoprime
 export isschurstable

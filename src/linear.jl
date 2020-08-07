@@ -29,10 +29,10 @@ function axb(a::Polynomial,b::Polynomial)
     dx = db-da
     A = ltbtmatrix(a,dx+1)
     bc = coeffs(b)
-    F = qr(A)                           # instead of just solving the least squares problem,
+    F = qr(A)                           # Instead of just solving the least squares problem,
     R = F.R                             # we want to check if an exact solution exists
-    qb = F.Q'*bc                        # and do it efficiently (not by substituting into Ax=b)
-    if norm(qb[end-dx:end],Inf) < 1e-8  # should be perhaps something related to eps
+    qb = F.Q'*bc                        # and do it efficiently (not by substituting into Ax=b).
+    if norm(qb[end-dx:end],Inf) < 1e-8  # Here should be perhaps something related to eps.
         xc = R\(qb[1:da])
         x = Polynomial(xc,a.var)
     else
@@ -63,7 +63,9 @@ function axby0(a::Polynomial,b::Polynomial)
     dx = db-1             # no need to start with deg(x) = deg(b) because such solution is guaranteed to exist:
     x = -b
     y = a
-    S = sylvestermatrix(a,b,degx=dx)
+    dx = degree(x)
+    dy = degree(y)
+    S = sylvestermatrix(a,b,(dx+1,dy+1))
     xy = nullspace(S)
     ds = size(xy,2)
     #println("Degree of x: $dx  Dimension of nullspace of S: $ds")
@@ -71,7 +73,8 @@ function axby0(a::Polynomial,b::Polynomial)
         x = Polynomial(xy[1:dx+1],a.var)
         y = Polynomial(xy[dx+2:end],a.var)
         dx = dx-1         # simply reducing the anticipated degrees of the solutions
-        S = sylvestermatrix(a,b,degx=dx)
+        dy = dy-1
+        S = sylvestermatrix(a,b,(dx+1,dy+1))
         xy = nullspace(S)
         ds = size(xy,2)
         #println("Degree of x: $dx  Dimension of nullspace of S: $ds")
@@ -80,30 +83,62 @@ function axby0(a::Polynomial,b::Polynomial)
 end
 
 """
-    x,y = axbyc(a,b,c)
+    x,y = axbyc(a,b,c[;deg=:miny])
 
 Solve the linear Diophantine equation ``ax+by=c`` with univariate polynomials.
 
-The problem corresponds to finding a feedback controller given by the transfer function ``y/x`` for a system modelled by the transfer function ``b/a`` such the that closed-loop characteristic polynomial is `c`.
+The extra input parameter `deg` gives some specification of degrees of the two polynomials `x` and `y`. By default, `deg=:miny` specifies that a solution minimizing the degree of `y` is sought. If `deg=:minx`, the degree of `x` is minimized.
+
+The problem corresponds to finding a (negative) feedback controller given by the transfer function ``y/x`` for a system modelled by the transfer function ``b/a`` such the that closed-loop characteristic polynomial is `c`. Choosing a solution that minimizes the degree of `y`, causal controller `y/x` is obtained.
 
 # Examples
 
 ```julia
-julia> a = Polynomial([1,2,3],:s);  b = Polynomial([5,6],:s); c = Polynomial([6,7,8],:s);
-julia> x, y = axbyc(a,b,c)
-(Polynomial(4.181818181818182), Polynomial(0.4545454545454546 - 0.9090909090909091*s))
+julia> a = Polynomial([1,2,3],:s);
+julia> b = Polynomial([4,5],:s);
+julia> c = Polynomial([5,6,7,8,9],:s);
+
+julia> x,y = axbyc(a,b,c,deg=:miny)
+(Polynomial(1.8484848484848486 + 0.6666666666666666*s + 3.0*s^2), Polynomial(0.7878787878787878 - 0.5757575757575759*s))
+
+julia> a*x+b*y≈c
+true
+
+julia> x,y = axbyc(a,b,c,deg=:minx)
+(Polynomial(0.6909090909090905), Polynomial(1.3272727272727274 - 0.25454545454545435*s + 1.8*s^2))
+
+julia> a*x+b*y≈c
+true
 ```
 """
-function axbyc(a::Polynomial,b::Polynomial,c::Polynomial)
+function axbyc(a::Polynomial,b::Polynomial,c::Polynomial;deg=:miny)
     da = degree(a)
     db = degree(b)
     dc = degree(c)
-    dx = db - 1
-    dy = da -1
-    S = sylvestermatrix(a,b)
-    xy = S\coeffs(c)
+    #dc = max(max(da,db),dc)             # if deg(c) too small, higher coeffs of c padded with zeros
+    if deg == :miny
+        dy = da-1                       # degree of y < degree of a
+        m2 = db+1+dy                    # minimum number of rows of the b-block in the Sylvester
+        m = max(da+1,m2,dc+1)           # number of rows of the whole Sylvester matrix
+        n1 = m-da                       # number of columns of the a-block in the Sylvester matrix
+        dx = n1-1                       # degree of x
+        w = (n1,dy+1)
+    elseif deg == :minx
+        dx = db-1
+        m1 = da+1+dx
+        m = max(db+1,m1,dc+1)
+        n2 = m-db
+        dy = n2-1
+        w = (dx+1,n2)
+    else
+        throw(ArgumentError("deg argument with unacceptable value"))
+    end
+    cc = zeros(Float64,m)
+    cc[1:dc+1] = coeffs(c)
+    S = sylvestermatrix(a,b,w)    # generally a wide matrix, can exploit
+    xy = S\cc
     x = xy[1:dx+1]
-    y = xy[dx+2:(da+db)]
+    y = xy[dx+2:end]
     x = Polynomial(x,a.var)
     y = Polynomial(y,a.var)
     return (x,y)
