@@ -27,13 +27,13 @@ function axb(a::Polynomial,b::Polynomial)
     da = degree(a)
     db = degree(b)
     dx = db-da
-    A = ltbtmatrix(a,dx+1)
+    A = ltbtmatrix(a,dx+1)              # The matrix A will be (generally) tall rectangular.
     bc = coeffs(b)
     F = qr(A)                           # Instead of just solving the least squares problem,
     R = F.R                             # we want to check if an exact solution exists
     qb = F.Q'*bc                        # and do it efficiently (not by substituting into Ax=b).
-    if norm(qb[end-dx:end],Inf) < 1e-8  # Here should be perhaps something related to eps.
-        xc = R\(qb[1:da])
+    if norm(qb[dx+2:end],Inf) < 1e-8    # Here should be perhaps something related to eps.
+        xc = R\(qb[1:dx+1])             # will Julia's backslash operator take advantage of triangularity of R? Perhaps yes, R has the "triangular" flag.
         x = Polynomial(xc,a.var)
     else
         x = nothing
@@ -115,7 +115,6 @@ function axbyc(a::Polynomial,b::Polynomial,c::Polynomial;deg=:miny)
     da = degree(a)
     db = degree(b)
     dc = degree(c)
-    #dc = max(max(da,db),dc)             # if deg(c) too small, higher coeffs of c padded with zeros
     if deg == :miny
         dy = da-1                       # degree of y < degree of a
         m2 = db+1+dy                    # minimum number of rows of the b-block in the Sylvester
@@ -135,13 +134,17 @@ function axbyc(a::Polynomial,b::Polynomial,c::Polynomial;deg=:miny)
     end
     cc = zeros(Float64,m)
     cc[1:dc+1] = coeffs(c)
-    S = sylvestermatrix(a,b,w)    # generally a wide matrix, can exploit
-    xy = S\cc
+    S = sylvestermatrix(a,b,w)          # The matrix S will be square but may be singular.
+    xy = S\cc                           # Could be perhaps done more efficiently, see axb().
     x = xy[1:dx+1]
     y = xy[dx+2:end]
     x = Polynomial(x,a.var)
     y = Polynomial(y,a.var)
-    return (x,y)
+    if a*x+b*y≈c
+        return (x,y)
+    else
+        return (nothing,nothing)
+    end
 end
 
 """

@@ -176,6 +176,12 @@ end
         a*x≈b
     end
     @test begin
+        a = Polynomial([1,2,3],:s);
+        b = a*Polynomial([4,5,6],:s);
+        x = axb(a,b)                # it should find the solution
+        a*x≈b
+    end
+    @test begin
         a = Polynomial([1,2],:s)
         b = Polynomial([1,2,3],:s);
         x = axb(a,b)                # it should detect there is no solution
@@ -229,7 +235,7 @@ end
         b = Polynomial([4,5],:s)*Polynomial([1,1],:s)
         c = Polynomial([6,7,8,9],:s)
         x,y = axbyc(a,b,c,deg=:miny)
-        isnothing(x)               
+        isnothing(x)
     end
 end
 
