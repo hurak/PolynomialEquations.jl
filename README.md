@@ -129,7 +129,7 @@ and
 ```math
 a(z)a(1/z) = x(z)x(1/z)
 ```
-where `a` is some given univariate polynomial and `x` is a Hurwitz stable and Schur stable polynomial, respectively, That is, all its roots are inside the open left half plane and an open unit circle, respectively.
+where `a` is some given univariate polynomial and `x` is a Hurwitz stable and Schur stable polynomial, respectively, That is, all its roots are inside the open left half plane and the open unit disk, respectively.
 
 ## Related Julia packages
 - [Polynomials](https://github.com/JuliaMath/Polynomials.jl) – provides the basic data types – `Polynomial` and `LaurentPolynomial`.
