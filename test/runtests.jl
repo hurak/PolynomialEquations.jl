@@ -102,7 +102,7 @@ end
     @test begin
         a = Polynomial([1,2,3],:s)
         b = Polynomial([4,5],:s)
-        S = sylvesterresultantmatrix(a,b)
+        S = sylvestermatrix(a,b)
         R = [1  4  0;
              2  5  4;
              3  0  5]

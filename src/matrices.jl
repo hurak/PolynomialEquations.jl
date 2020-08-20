@@ -70,9 +70,13 @@ function ltbtmatrix(a::LaurentPolynomial{T},c::Signed) where {T}
 end
 
 """
-    sylvesterresultantmatrix(a,b)
+    sylvestermatrix(a,b)
 
-Build a Sylvester resultant matrix for a pair of univariate polynomials `a` and `b`. The matrix is obtained by stacking horizontally two lower triangular banded Toeplitz matrices corresponding to the two polynomials. The matrix is square. The matrix is stored as dense.
+Build a Sylvester resultant matrix for a pair of univariate polynomials `a` and `b`.
+
+The matrix is obtained by stacking horizontally two lower triangular banded Toeplitz matrices corresponding to the two polynomials. The matrix is square. Its nonsingularity is used to detect coprimeness of the two polynomials.
+
+The matrix is stored as dense.
 
 # Examples
 
@@ -83,14 +87,14 @@ Polynomial(1 + 2*s + 3*s^2)
 julia> b = Polynomial([4,5],:s)
 Polynomial(4 + 5*s)
 
-julia> S = sylvesterresultantmatrix(a,b)
+julia> S = sylvestermatrix(a,b)
 3×3 Array{Int64,2}:
  1  4  0
  2  5  4
  3  0  5
 ```
 """
-function sylvesterresultantmatrix(a::Polynomial{T},b::Polynomial{T}) where {T}
+function sylvestermatrix(a::Polynomial{T},b::Polynomial{T}) where {T}
     da = degree(a)
     db = degree(b)
     dx = degree(b)-1
