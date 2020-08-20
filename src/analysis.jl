@@ -21,7 +21,7 @@ function iscoprime(a::Polynomial,b::Polynomial)
     da = degree(a)
     db = degree(b)
     dx = db-1
-    S = sylvesterresultantmatrix(a,b)
+    S = sylvestermatrix(a,b)
     return rank(S)==(da+db)
 end
 
