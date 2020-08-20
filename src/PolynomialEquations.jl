@@ -9,8 +9,9 @@ using Printf
 
 include("transformations.jl")
 include("matrices.jl")
-include("linear.jl")
 include("analysis.jl")
+include("linear.jl")
+include("spectral.jl")
 
 export scale
 export conjreciprocal
@@ -28,5 +29,6 @@ export axbyc
 export axaxbb
 export axbycd
 export axycminl1
+export spectralfactor
 
 end

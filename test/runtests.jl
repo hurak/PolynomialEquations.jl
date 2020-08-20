@@ -267,3 +267,12 @@ end
         a*x+y≈c
     end
 end
+
+@testset "Computing a spectral factor of a polynomial" begin
+    @test begin
+        b = Polynomial([1.0,2.0,3.0],:s)
+        a = cconj(b)*b
+        x = spectralfactor(a)
+        (cconj(x)*x≈a) & ishurwitzstable(x)
+    end
+end
