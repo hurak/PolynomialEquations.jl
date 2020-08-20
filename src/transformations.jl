@@ -1,5 +1,5 @@
 """
-    scale(a,ρ)
+    scale(a::Polynomial,ρ::Number)
 
 Scale the univariate polynomial `a` with the variable `s` given by ``a(s) = a_0   + a_1 s + a_2 s^2 + ... + a_n s^n`` by the scalar positive real number `ρ`. This amounts to replacing the original variable `s` with a new scaled variable `ρs`.
 
@@ -21,7 +21,7 @@ function scale(a::Polynomial,ρ::Number)
 end
 
 """
-    cconj(a)
+    cconj(a::Polynomial)
 
 Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n`` with respect to the imaginary axis, that is, return the polynomial ``\\tilde a(s) = \\bar a(-s)= \\bar a_0 - \\bar a_1 s + \\bar a_2 s^2 + ... \\pm \\bar a_n s^n``.
 
@@ -51,9 +51,11 @@ function cconj(a::Polynomial)
 end
 
 """
-    conjreciprocal(a)
+    conjreciprocal(a::Polynomial)
 
-Return the conjugate reciprocal polynomial for a given polynomial ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n``, that is, return the polynomial ``r(s) = \\bar a_n + \\bar a_{n-1} s + \\bar a_{n-2} s^2 + ... + \\bar a_0 s^n``.
+Return the conjugate reciprocal polynomial for a given polynomial `a`.
+
+Fof a polynomial ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n``, return the polynomial ``r(s) = \\bar a_n + \\bar a_{n-1} s + \\bar a_{n-2} s^2 + ... + \\bar a_0 s^n``.
 
 # Examples
 
@@ -79,9 +81,11 @@ function conjreciprocal(a::Polynomial)
 end
 
 """
-    dconj(a)
+    dconj(a::LaurentPolynomial)
 
-Return the conjugate polynomial for a given polynomial ``a(z) = a_0 + a_1 z + a_2 z^2 + ... + a_n z^n`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``\\tilde a(z) = \\bar a_n z^{-n} + \\bar a_{n-1} z^{-n+1} + \\bar a_{n-2} z^{-n+2} + ... + \\bar a_0``. The function is only defined for `LaurentPolynomial` type.
+Return the conjugate polynomial for a given polynomial ``a(z) = a_0 + a_1 z + a_2 z^2 + ... + a_n z^n`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``\\tilde a(z) = \\bar a_n z^{-n} + \\bar a_{n-1} z^{-n+1} + \\bar a_{n-2} z^{-n+2} + ... + \\bar a_0``.
+
+The function is only defined for `LaurentPolynomial` type even if it is used to represent a standard polynomial (with no negative powers).
 
 It is used in the analysis and synthesis of discrete-time filters and controllers. This is reflected in prepending the letter `d` to the `conj` function name.
 

@@ -28,7 +28,7 @@ end
 """
     isschurstable(a)
 
-Check if the `a` is Schur stable, that is, it has all its roots inside the unit disk.
+Check if the polynomial `a` is Schur stable, that is, it has all its roots inside the unit disk.
 
 # Examples
 
@@ -48,7 +48,7 @@ function isschurstable(a::Polynomial)
 end
 
 """
-    ishurwitzstable(a)
+    ishurwitzstable(a::Polynomial)
 
 Check if the `a` is Schur stable, that is, it has all its roots inside the left complex half-plane.
 
@@ -67,4 +67,44 @@ false
 function ishurwitzstable(a::Polynomial)
     r = roots(a)
     return all(real(r) .<= 0)
+end
+
+"""
+    isconjsymmetric(a::Polynomial)
+
+Check if the scalar univariate polynomial `a` is conjugate symmetric, that is, if `a=ã`.
+
+For a scalar univariate polynomial `a` with real coefficients, check if `a(s)=a(-s)`. If the coefficients are complex, the condition then extends to `a(s)=ā(-s)`, where `ā` is obtained from `a` by complex-conjugating the coefficients. A necessary and sufficient condition for conjugate symmetry is that the coefficients with odd powers of the variable are zero and the coefficients with even powers are real.
+
+# Examples
+```julia
+julia> a = Polynomial([1,0,2,0,3],:s)
+Polynomial(1 + 2*s^2 + 3*s^4)
+
+julia> isconjsymmetric(a)
+true
+```
+"""
+function isconjsymmetric(a::Polynomial)
+    return isequal(a,cconj(a))
+end
+
+"""
+    isconjsymmetric(a::LaurentPolynomial)
+
+Check if the scalar univariate Laurent polynomial `a` is conjugate symmetric, that is, if `a=ã`.
+
+For a scalar univariate Laurent polynomial `a` with real coefficients, check if `a(z)=a(1/z)`. If the coefficients are complex, the condition then extends to `a(z)=ā(1/z)`, where `ā` is obtained from `a` by complex-conjugating the coefficients. A necessary and sufficient condition is that the coefficients are real and their order in the coefficient vector can be flipped with no impact.
+
+# Examples
+```julia
+julia> a = LaurentPolynomial([3,2,1,2,3],-2:2,:z)
+LaurentPolynomial(3*z⁻² + 2*z⁻¹ + 1 + 2*z + 3*z²)
+
+julia> isconjsymmetric(a)
+true
+```
+"""
+function isconjsymmetric(a::LaurentPolynomial)
+    return isequal(a,dconj(a))
 end

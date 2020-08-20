@@ -23,6 +23,7 @@ export sylvestermatrix
 export iscoprime
 export isschurstable
 export ishurwitzstable
+export isconjsymmetric
 export axb
 export axby0
 export axbyc
