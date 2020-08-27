@@ -270,9 +270,20 @@ end
 
 @testset "Computing a spectral factor of a polynomial" begin
     @test begin
-        b = Polynomial([1.0,2.0,3.0],:s)
+        b = Polynomial([1.0,2.0,3.0],:s)*Polynomial([1,-1],:s)
         a = cconj(b)*b
         x = spectralfactor(a)
-        (cconj(x)*x≈a) & ishurwitzstable(x)
+        s = Polynomial([1,3,5,3],:s)
+        x ≈ s
+    end
+end
+
+@testset "Computing a spectral factor of a Laurent polynomial" begin
+    @test begin
+        b = convert(LaurentPolynomial,fromroots([3,-1/2],var=:z))
+        a = b*dconj(b)
+        x = spectralfactor(a)
+        s = LaurentPolynomial([-1/2,1/2,3],0:2,:z)
+        x ≈ s
     end
 end
