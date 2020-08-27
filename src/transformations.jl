@@ -111,3 +111,29 @@ function dconj(a::LaurentPolynomial)
     fr = -a.n[]:-a.m[]                   # flipping and negating the range
     d = LaurentPolynomial(dc,fr,a.var)
 end
+
+"""
+    shift(p::LaurentPolynomial[,k::Integer=1])
+
+Increase the powers of the variable in the Laurent polynomial by 1 or a given (possibly negative) number.
+
+For a univariate Laurent polynomial `p(z) = pₘ zᵐ + p₋₁ z⁻¹ +  p₀ + p₁ z + … + pₙ zⁿ` and a given integer `k`, return a Laurent polynomial  `p(z) = pₘ zᵐ⁺ᵏ + p₋₁ z⁻¹⁺ᵏ +  p₀ zᵏ + p₁ zᵏ⁺¹ + … + pₙ zⁿ⁺ᵏ`. If `k` is not specified, it is assumed that `k=1`.
+
+# Examples
+
+```julia
+julia> p = LaurentPolynomial([1,2,3,4],-2:1,:z)
+LaurentPolynomial(z⁻² + 2*z⁻¹ + 3 + 4*z)
+
+julia> shift(p)
+LaurentPolynomial(z⁻¹ + 2 + 3*z + 4*z²)
+
+julia> shift(p,-3)
+LaurentPolynomial(z⁻⁵ + 2*z⁻⁴ + 3*z⁻³ + 4*z⁻²)
+```
+"""
+function shift(p::LaurentPolynomial,k::Integer=1)
+    r = range(p)
+    s = LaurentPolynomial(coeffs(p),r.+k,p.var)
+    return s
+end

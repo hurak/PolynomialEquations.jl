@@ -14,6 +14,7 @@ include("linear.jl")
 include("spectral.jl")
 
 export scale
+export shift
 export conjreciprocal
 export cconj
 export dconj

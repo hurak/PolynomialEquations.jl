@@ -13,6 +13,21 @@ using LinearAlgebra
     end
 end
 
+@testset "Shifting a Laurent polynomial" begin
+    @test begin
+        p = LaurentPolynomial([1,2,3,4],-2:1,:z)
+        s = shift(p)
+        r = LaurentPolynomial([1,2,3,4],-1:2,:z)
+        isequal(s,r)
+    end
+    @test begin
+        p = LaurentPolynomial([1,2,3,4],-2:1,:z)
+        s = shift(p,-3)
+        r = LaurentPolynomial([1,2,3,4],-5:-2,:z)
+        isequal(s,r)
+    end
+end
+
 @testset "Conjugate of a polynomial with respect to the imaginary axis" begin
     @test begin
         a = Polynomial(1:5,:s)
