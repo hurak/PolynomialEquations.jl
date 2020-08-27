@@ -22,7 +22,9 @@ axycminl1
 
 ## Quadratic equations — spectral factorization
 
-Nothing yet.
+```@docs
+spectralfactor
+```
 
 ## Utilities
 
@@ -36,6 +38,7 @@ sylvestermatrix
 
 ```@docs
 scale
+shift
 cconj
 dconj
 conjreciprocal
