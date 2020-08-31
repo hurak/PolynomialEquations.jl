@@ -23,7 +23,7 @@ end
 """
     cconj(a::Polynomial)
 
-Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ`` with respect to the imaginary axis, that is, return the polynomial ``̃a(s) = ̄a(-s)= ̄a₀ - ̄a₁ s + ̄a₂ s² + … ± ̄aₙ sⁿ``.
+Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ`` with respect to the imaginary axis, that is, return the polynomial ``̃ã(s) = ̄ā(-s)=ā₀ - ̄ā₁s + ā₂ s² + … ± ̄āₙ sⁿ``.
 
 It is used in the analysis and synthesis of continuous-time filters and controllers. This is reflected in prepending the letter `c` to the `conj` function name.
 
@@ -55,7 +55,7 @@ end
 
 Return the conjugate reciprocal polynomial for a given polynomial `a`.
 
-Fof a polynomial ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ``, return the polynomial ``r(s) = ̄aₙ + ̄aₙ₋₁ s + ̄aₙ₋₂ s² + … + ̄a₀ sⁿ``.
+Fof a polynomial ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ``, return the polynomial ``r(s) = ̄āₙ + ̄āₙ₋₁ s + ̄āₙ₋₂ s² + … + ̄ā₀ sⁿ``.
 
 # Examples
 
@@ -83,7 +83,7 @@ end
 """
     dconj(a::LaurentPolynomial)
 
-Return the conjugate polynomial for a given polynomial ``a(z) = a₀ + a₁ z + a₂ z² + ... + aₙ zⁿ`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``̃a(z) = ̄aₙ z⁻ⁿ + ̄aₙ₋₁ z⁻ⁿ⁺¹ + ̄aₙ₋₂ z⁻ⁿ⁺² + … + ̄a₀``.
+Return the conjugate polynomial for a given polynomial ``a(z) = a₀ + a₁ z + a₂ z² + ... + aₙ zⁿ`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``ã(z) = āₙ z⁻ⁿ + āₙ₋₁ z⁻ⁿ⁺¹ + āₙ₋₂ z⁻ⁿ⁺² + … + ā₀``.
 
 The function is only defined for `LaurentPolynomial` type even if it is used to represent a standard polynomial (with no negative powers).
 
