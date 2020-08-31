@@ -1,7 +1,7 @@
 """
     scale(a::Polynomial,ρ::Number)
 
-Scale the univariate polynomial `a` with the variable `s` given by ``a(s) = a_0   + a_1 s + a_2 s^2 + ... + a_n s^n`` by the scalar positive real number `ρ`. This amounts to replacing the original variable `s` with a new scaled variable `ρs`.
+Scale the univariate polynomial `a` with the variable `s` given by ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ`` by the scalar positive real number `ρ`. This amounts to replacing the original variable `s` with a new scaled variable `ρs`.
 
 # Examples
 
@@ -23,7 +23,7 @@ end
 """
     cconj(a::Polynomial)
 
-Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n`` with respect to the imaginary axis, that is, return the polynomial ``\\tilde a(s) = \\bar a(-s)= \\bar a_0 - \\bar a_1 s + \\bar a_2 s^2 + ... \\pm \\bar a_n s^n``.
+Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ`` with respect to the imaginary axis, that is, return the polynomial ``̃a(s) = ̄a(-s)= ̄a₀ - ̄a₁ s + ̄a₂ s² + … ± ̄aₙ sⁿ``.
 
 It is used in the analysis and synthesis of continuous-time filters and controllers. This is reflected in prepending the letter `c` to the `conj` function name.
 
@@ -55,7 +55,7 @@ end
 
 Return the conjugate reciprocal polynomial for a given polynomial `a`.
 
-Fof a polynomial ``a(s) = a_0 + a_1 s + a_2 s^2 + ... + a_n s^n``, return the polynomial ``r(s) = \\bar a_n + \\bar a_{n-1} s + \\bar a_{n-2} s^2 + ... + \\bar a_0 s^n``.
+Fof a polynomial ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ``, return the polynomial ``r(s) = ̄aₙ + ̄aₙ₋₁ s + ̄aₙ₋₂ s² + … + ̄a₀ sⁿ``.
 
 # Examples
 
@@ -83,7 +83,7 @@ end
 """
     dconj(a::LaurentPolynomial)
 
-Return the conjugate polynomial for a given polynomial ``a(z) = a_0 + a_1 z + a_2 z^2 + ... + a_n z^n`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``\\tilde a(z) = \\bar a_n z^{-n} + \\bar a_{n-1} z^{-n+1} + \\bar a_{n-2} z^{-n+2} + ... + \\bar a_0``.
+Return the conjugate polynomial for a given polynomial ``a(z) = a₀ + a₁ z + a₂ z² + ... + aₙ zⁿ`` with respect to the unit circle in the complex plane, that is, return the Laurent polynomial ``̃a(z) = ̄aₙ z⁻ⁿ + ̄aₙ₋₁ z⁻ⁿ⁺¹ + ̄aₙ₋₂ z⁻ⁿ⁺² + … + ̄a₀``.
 
 The function is only defined for `LaurentPolynomial` type even if it is used to represent a standard polynomial (with no negative powers).
 
