@@ -23,7 +23,7 @@ end
 """
     cconj(a::Polynomial)
 
-Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ`` with respect to the imaginary axis, that is, return the polynomial ``̃ã(s) = ̄ā(-s)=ā₀ - ̄ā₁s + ā₂ s² + … ± ̄āₙ sⁿ``.
+Return the conjugate of a given univariate polynomial `a` given by ``a(s) = a₀ + a₁ s + a₂ s² + … + aₙ sⁿ`` with respect to the imaginary axis, that is, return the polynomial ``ã(s) = ̄ā(-s)=ā₀ - ̄ā₁s + ā₂ s² + … ± ̄āₙ sⁿ``.
 
 It is used in the analysis and synthesis of continuous-time filters and controllers. This is reflected in prepending the letter `c` to the `conj` function name.
 
